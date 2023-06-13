@@ -11,7 +11,7 @@ export const Filter = ({ options, heading }: FilterProps) => {
       <Center>
         <VStack>
           <Box m="5">
-            <Heading size='md' boxShadow={'dark-lg'} rounded={'3xl'} pl='10' pr='10' pt='3' pb='3'>{heading}</Heading>
+            <Heading size='md' boxShadow={'dark-lg'} rounded={'3xl'} pl='8' pr='8' pt='3' pb='3'>{heading}</Heading>
           </Box>
           <Select placeholder="Select option">
             {options.map((option, index) => (
