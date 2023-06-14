@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, VStack } from "@chakra-ui/react";
+import { Box, VStack, Wrap } from "@chakra-ui/react";
 import { Filter } from "../components/Filter";
 import { FilterContext } from "../context/FilterContext";
 
@@ -9,9 +9,11 @@ const FilterSide: React.FC = () => {
     throw new Error("FilterSide must be used within a FilterProvider");
   }
   const { filters, setFilters } = context;
-  const cohortSelectionOptions = ["cohort1", "cohort2", "cohort3", "cohort4"];
-  const icd9CodeOptions = ["code1", "code2", "code3", "code4"];
-  const metricPPAOptions = ["metric1", "metric2", "metric3", "metric4"];
+
+  const visitTypeOptions = ["All", "Video+Audio", "Audio", "Transcript"];
+  const reasonForVisitOptions = ["Primary Care", "Genetics Consult", "Other"];
+  const sentimentOptions = ["Positive", "Neutral", "Negative"];
+  const patientAgeCategoryOptions = ["Child", "Adolescent", "Adult", "Senior"];
 
   const handleFilterChange = (
     filterName: keyof typeof filters,
@@ -21,24 +23,29 @@ const FilterSide: React.FC = () => {
   };
 
   return (
-    <Box w={"49vw"}>
-      <VStack>
+    <Box>
+      <Wrap spacingY={'5'} spacingX={'0'}>
         <Filter
-          options={cohortSelectionOptions}
-          heading={"Cohort Selection"}
-          onChange={(value) => handleFilterChange("cohortSelection", value)}
+          options={visitTypeOptions}
+          heading={"Visit Type"}
+          onChange={(value) => handleFilterChange("visitType", value)}
         />
         <Filter
-          options={icd9CodeOptions}
-          heading={"Filter by ICD-9 Code"}
-          onChange={(value) => handleFilterChange("icd9Code", value)}
+          options={reasonForVisitOptions}
+          heading={"Reason for Visit"}
+          onChange={(value) => handleFilterChange("reasonForVisit", value)}
         />
         <Filter
-          options={metricPPAOptions}
-          heading={"Metric (PPA)"}
-          onChange={(value) => handleFilterChange("metricPPA", value)}
+          options={sentimentOptions}
+          heading={"Sentiment"}
+          onChange={(value) => handleFilterChange("sentiment", value)}
         />
-      </VStack>
+        <Filter
+          options={patientAgeCategoryOptions}
+          heading={"Patient Age Category"}
+          onChange={(value) => handleFilterChange("patientAgeCategory", value)}
+        />
+      </Wrap>
     </Box>
   );
 };

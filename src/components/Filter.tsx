@@ -7,15 +7,29 @@ interface FilterProps {
 }
 
 export const Filter = ({ options, heading, onChange }: FilterProps) => {
-  
   return (
-    <Card mt='3' boxShadow={'dark-lg'} w={'25vw'} h={'25vh'}>
+    <Card boxShadow={"dark-lg"} mt="3" w={"25vw"} h={"25vh"}>
       <Center>
         <VStack>
           <Box m="5">
-            <Heading size='md' boxShadow={'dark-lg'} rounded={'3xl'} pl='8' pr='8' pt='3' pb='3'>{heading}</Heading>
+            <Heading
+              size="md"
+              boxShadow={"dark-lg"}
+              rounded={"3xl"}
+              pl="8"
+              pr="8"
+              pt="3"
+              pb="3"
+              color={'white'}
+              bgColor={'black'}
+            >
+              {heading}
+            </Heading>
           </Box>
-          <Select placeholder="Select option" onChange={(e) => onChange(e.target.value)}>
+          <Select
+            placeholder="Select option"
+            onChange={(e) => onChange(e.target.value)}
+          >
             {options.map((option, index) => (
               <option key={index} value={option}>
                 {option}
