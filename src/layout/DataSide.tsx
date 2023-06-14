@@ -1,18 +1,21 @@
-import {
-  Box,
-  Card,
-  Center,
-  CircularProgress,
-  VStack,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
-import { StatisticsTable } from "../components/StatisticsTable";
+import React, { useState, useEffect, useContext } from "react";
+import { Box, CircularProgress, VStack, Wrap } from "@chakra-ui/react";
 import BarChart from "../components/BarChart";
-import { chartOptions, chartData } from "../utils/chartConfig";
+import { chartOptions, chartData as data } from "../utils/chartConfig";
 import "chart.js/auto";
+import axios from "axios"; // or use another data-fetching library
+import { FilterContext } from "../context/FilterContext";
+import { StatisticsTable } from "../components/StatisticsTable";
 
-const DataSide = () => {
+const DataSide: React.FC = () => {
+  const context = useContext(FilterContext);
+  if (!context) {
+    throw new Error("DataSide must be used within a FilterProvider");
+  }
+  const { filters } = context;
+  const [chartData, setChartData] = useState<any>(data); 
+  const [loading, setLoading] = useState(false);
+
   const tableData = Array.from({ length: 5 }, (_, i) => {
     return {
       column1: `Item ${i + 1}`,
@@ -20,17 +23,26 @@ const DataSide = () => {
     };
   });
 
+  useEffect(() => {
+    console.log("FILTERS CHANGED");
+  }, [filters]);
+
+  if (loading) {
+    return <CircularProgress isIndeterminate />;
+  }
+
   return (
-    <Center>
-      <VStack spacing={4}>
-        <Wrap>
-          <BarChart options={chartOptions} data={chartData} />
-          <BarChart options={chartOptions} data={chartData} />
-          <BarChart options={chartOptions} data={chartData} />
+    <Box w={"49vw"}>
+      <VStack>
+        <Wrap spacing={3}>
+          <BarChart data={chartData} options={chartOptions} />
+          <BarChart data={chartData} options={chartOptions} />
+          <BarChart data={chartData} options={chartOptions} />
+          <BarChart data={chartData} options={chartOptions} />
         </Wrap>
         <StatisticsTable data={tableData} />
       </VStack>
-    </Center>
+    </Box>
   );
 };
 

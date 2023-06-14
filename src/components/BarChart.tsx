@@ -11,8 +11,8 @@ interface BarChartProps {
 const BarChart: FC<BarChartProps> = ({ options, data }) => {
   return (
     <WrapItem>
-      <Card>
-        <Bar options={options} data={data} />;
+      <Card boxShadow={'dark-lg'} rounded={'3xl'}>
+        <Bar options={options} data={data} />
       </Card>
     </WrapItem>
   );
