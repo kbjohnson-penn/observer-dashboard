@@ -1,19 +1,19 @@
 export const chartOptions = {
   title: {
     display: true,
-    text: "Chart Title",
+    text: "Statistics",
   },
   scales: {
     x: {
       title: {
         display: true,
-        text: "X-Axis Title",
+        text: "Month",
       },
     },
     y: {
       title: {
         display: true,
-        text: "Y-Axis Title",
+        text: "Number of Videos",
       },
     },
   },
@@ -23,7 +23,7 @@ export const chartData = {
   labels: ["January", "February", "March", "April", "May", "June"],
   datasets: [
     {
-      label: "# of videos",
+      label: "Statistics",
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",

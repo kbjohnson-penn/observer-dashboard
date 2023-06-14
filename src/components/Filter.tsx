@@ -8,7 +8,7 @@ interface FilterProps {
 
 export const Filter = ({ options, heading, onChange }: FilterProps) => {
   return (
-    <Card boxShadow={"dark-lg"} mt="3" w={"25vw"} h={"25vh"}>
+    <Card boxShadow={"dark-lg"} mt="1" ml='10' mb='3' w={"25vw"} h={"25vh"}>
       <Center>
         <VStack>
           <Box m="5">

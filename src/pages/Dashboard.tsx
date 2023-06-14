@@ -16,14 +16,14 @@ const Dashboard: React.FC = () => {
     <FilterContext.Provider value={{ filters, setFilters }}>
       <Center>
         <HStack>
-          <Box w='3vw' />
+          <Box w='1vw' />
           <Box w='60vw'>
             <DataSide />
           </Box>
           <Box w='30vw'>
             <FilterSide  />
           </Box>
-          <Box w='3vw' />
+          <Box w='1vw' />
         </HStack>
       </Center>
     </FilterContext.Provider>

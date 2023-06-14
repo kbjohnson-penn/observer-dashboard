@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, CircularProgress, VStack, Wrap } from "@chakra-ui/react";
+import { Box, Center, CircularProgress, Grid, VStack, Wrap } from "@chakra-ui/react";
 import BarChart from "../components/BarChart";
 import { chartOptions, chartData as data } from "../utils/chartConfig";
 import "chart.js/auto";
@@ -13,7 +13,7 @@ const DataSide: React.FC = () => {
     throw new Error("DataSide must be used within a FilterProvider");
   }
   const { filters } = context;
-  const [chartData, setChartData] = useState<any>(data); 
+  const [chartData, setChartData] = useState<any>(data);
   const [loading, setLoading] = useState(false);
 
   const tableData = Array.from({ length: 5 }, (_, i) => {
@@ -32,16 +32,18 @@ const DataSide: React.FC = () => {
   }
 
   return (
-    <Box w={"49vw"}>
-      <VStack>
-        <Wrap spacing={3}>
-          <BarChart data={chartData} options={chartOptions} />
-          <BarChart data={chartData} options={chartOptions} />
-          <BarChart data={chartData} options={chartOptions} />
-          <BarChart data={chartData} options={chartOptions} />
-        </Wrap>
-        <StatisticsTable data={tableData} />
-      </VStack>
+    <Box>
+      <Center>
+        <VStack>
+          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+            <BarChart data={chartData} options={chartOptions} />
+            <BarChart data={chartData} options={chartOptions} />
+            <BarChart data={chartData} options={chartOptions} />
+            <BarChart data={chartData} options={chartOptions} />
+          </Grid>
+          <StatisticsTable data={tableData} />
+        </VStack>
+      </Center>
     </Box>
   );
 };
