@@ -4,16 +4,38 @@ import { Filter } from "../components/Filter";
 import { FilterContext } from "../context/FilterContext";
 
 const FilterSide: React.FC = () => {
+
+  const visitTypeOptions = [
+    { value: 'VA', label: 'Video+Audio' },
+    { value: 'A', label: 'Audio' },
+    { value: 'T', label: 'Transcript' },
+    { value: 'ETC', label: 'Other' },
+  ];
+  
+  const reasonForVisitOptions = [
+    { value: 'PC', label: 'Primary Care' },
+    { value: 'GC', label: 'Genetics Consult' },
+    { value: 'O', label: 'Other' },
+  ];
+  
+  const sentimentOptions = [
+    { value: 'P', label: 'Positive' },
+    { value: 'N', label: 'Negative' },
+    { value: 'NE', label: 'Neutral' },
+  ];
+  
+  const patientAgeCategoryOptions = [
+    { value: 'C', label: 'Child' },
+    { value: 'A', label: 'Adolescent' },
+    { value: 'AD', label: 'Adult' },
+    { value: 'S', label: 'Senior' },
+  ];
+  
   const context = useContext(FilterContext);
   if (!context) {
     throw new Error("FilterSide must be used within a FilterProvider");
   }
   const { filters, setFilters } = context;
-
-  const visitTypeOptions = ["All", "Video+Audio", "Audio", "Transcript"];
-  const reasonForVisitOptions = ["Primary Care", "Genetics Consult", "Other"];
-  const sentimentOptions = ["Positive", "Neutral", "Negative"];
-  const patientAgeCategoryOptions = ["Child", "Adolescent", "Adult", "Senior"];
 
   const handleFilterChange = (
     filterName: keyof typeof filters,
@@ -23,7 +45,7 @@ const FilterSide: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box position="fixed" top={0}>
       <Wrap spacingY={'5'} spacingX={'0'}>
         <Filter
           options={visitTypeOptions}

@@ -1,25 +1,27 @@
 import { Select, Card, Center, VStack, Box, Heading } from "@chakra-ui/react";
 
+interface Option {
+  value: string;
+  label: string;
+}
+
 interface FilterProps {
-  options: string[];
+  options: Option[];
   heading: string;
   onChange: (value: string) => void;
 }
 
 export const Filter = ({ options, heading, onChange }: FilterProps) => {
   return (
-    <Card boxShadow={"dark-lg"} mt="1" ml='10' mb='3' w={"25vw"} h={"25vh"}>
+    <Card boxShadow={"dark-lg"} mt="1" ml='10' mb='1' w={"20vw"} h={"18vh"}>
       <Center>
         <VStack>
-          <Box m="5">
+          <Box m="3">
             <Heading
-              size="md"
+              size="sm"
               boxShadow={"dark-lg"}
               rounded={"3xl"}
-              pl="8"
-              pr="8"
-              pt="3"
-              pb="3"
+              p='2'
               color={'white'}
               bgColor={'black'}
             >
@@ -31,8 +33,8 @@ export const Filter = ({ options, heading, onChange }: FilterProps) => {
             onChange={(e) => onChange(e.target.value)}
           >
             {options.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
+              <option key={index} value={option.value}>
+                {option.label}
               </option>
             ))}
           </Select>

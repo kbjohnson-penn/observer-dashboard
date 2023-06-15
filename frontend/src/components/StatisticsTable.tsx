@@ -7,34 +7,43 @@ import {
   Td,
   Card,
   Center,
+  Box,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 type TableData = {
-  column1: string;
-  column2: string;
+  id: number;
+  patient_age_category: string;
+  reason_for_visit: string;
+  sentiment: string;
+  visit_type: string;
 };
 
-type StatisticsTableProps = {
-  data: TableData[];
-};
+export const StatisticsTable = ({ data }: { data: TableData[] }) => {
+  const bgColor = useColorModeValue("gray.200", "whiteAlpha.100");
 
-export const StatisticsTable = ({ data }: StatisticsTableProps) => {
   return (
-    <Center>
-      <Card boxShadow={"dark-lg"} rounded={"3xl"} w="75vh">
+    <Center  mt='2'>
+      <Card boxShadow={"dark-lg"} rounded={"3xl"} w="75vh" p={5}>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>TYPES</Th>
-              <Th>PATIENTS</Th>
+              <Th>ID</Th>
+              <Th>Patient Age Category</Th>
+              <Th>Reason For Visit</Th>
+              <Th>Sentiment</Th>
+              <Th>Visit Type</Th>
             </Tr>
           </Thead>
           <Tbody>
             {data.map((row, index) => (
-              <Tr key={index}>
-                <Td>{row.column1}</Td>
-                <Td>{row.column2}</Td>
-              </Tr>
+              <Box as="tr" key={index} bg={index % 2 === 0 ? bgColor : "transparent"}>
+                <Td>{row.id}</Td>
+                <Td>{row.patient_age_category}</Td>
+                <Td>{row.reason_for_visit}</Td>
+                <Td>{row.sentiment}</Td>
+                <Td>{row.visit_type}</Td>
+              </Box>
             ))}
           </Tbody>
         </Table>

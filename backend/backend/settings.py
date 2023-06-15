@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'observer',
-    'corsheaders'
+    'corsheaders',
     'django_filters',
     'rest_framework',
     'django.contrib.admin',
