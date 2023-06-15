@@ -24,8 +24,17 @@ const DataSide: React.FC = () => {
   });
 
   useEffect(() => {
-    console.log("FILTERS CHANGED");
+    const { visitType, reasonForVisit, sentiment, patientAgeCategory } = filters;
+  
+    axios.get(`http://localhost:8000/api/videos?visit_type=${visitType}&reason_for_visit=${reasonForVisit}&sentiment=${sentiment}&patient_age_category=${patientAgeCategory}`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [filters]);
+  
 
   if (loading) {
     return <CircularProgress isIndeterminate />;
