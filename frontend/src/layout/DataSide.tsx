@@ -53,6 +53,12 @@ const DataSide: React.FC = () => {
       .then((response) => {
         setTableData(response.data);
 
+        const { setVideoStats, videoStats } = context;
+        setVideoStats({
+          current: response.data.length,
+          previous: videoStats.current,
+        });
+
         const processedData = processChartData(response.data);
         setChartData(processedData);
 

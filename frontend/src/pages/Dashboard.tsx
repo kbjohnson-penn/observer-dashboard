@@ -12,8 +12,15 @@ const Dashboard: React.FC = () => {
     patientAgeCategory: "",
   });
 
+  const initialVideoStats = {
+    current: 0,
+    previous: 0,
+  };
+
+  const [videoStats, setVideoStats] = useState(initialVideoStats);
+
   return (
-    <FilterContext.Provider value={{ filters, setFilters }}>
+    <FilterContext.Provider value={{ filters, setFilters, videoStats, setVideoStats }}>
       <Center>
         <HStack>
           <Box w='1vw' />
