@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, Center, CircularProgress, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  CircularProgress,
+  VStack,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react";
 import { ChartData as ChartJsData } from "chart.js";
 import BarChart from "../components/BarChart";
 import "chart.js/auto";
@@ -135,31 +142,49 @@ const DataSide: React.FC = () => {
   return (
     <Box>
       <Center>
-        <VStack>
-          {chartData.visitType && (
-            <BarChart
-              data={chartData.visitType}
-              options={chartOptions("Visit Type")}
-            />
-          )}
-          {chartData.reasonForVisit && (
-            <BarChart
-              data={chartData.reasonForVisit}
-              options={chartOptions("Reason For Visit")}
-            />
-          )}
-          {chartData.sentiment && (
-            <BarChart
-              data={chartData.sentiment}
-              options={chartOptions("Sentiment")}
-            />
-          )}
-          {chartData.patientAgeCategory && (
-            <BarChart
-              data={chartData.patientAgeCategory}
-              options={chartOptions("Patient Age Category")}
-            />
-          )}
+        <VStack spacing={2}>
+          <Wrap justify="center" spacing={4}>
+            {chartData.visitType && (
+              <WrapItem>
+                <Box width={'350px'} height={"250px"}>
+                  <BarChart
+                    data={chartData.visitType}
+                    options={chartOptions("Visit Type")}
+                  />
+                </Box>
+              </WrapItem>
+            )}
+            {chartData.reasonForVisit && (
+              <WrapItem>
+                <Box width={'350px'} height={"250px"}>
+                  <BarChart
+                    data={chartData.reasonForVisit}
+                    options={chartOptions("Reason For Visit")}
+                  />
+                </Box>
+              </WrapItem>
+            )}
+            {chartData.sentiment && (
+              <WrapItem>
+                <Box width={'350px'} height={"250px"}>
+                  <BarChart
+                    data={chartData.sentiment}
+                    options={chartOptions("Sentiment")}
+                  />
+                </Box>
+              </WrapItem>
+            )}
+            {chartData.patientAgeCategory && (
+              <WrapItem>
+                <Box width={'350px'} height={"250px"}>
+                  <BarChart
+                    data={chartData.patientAgeCategory}
+                    options={chartOptions("Patient Age Category")}
+                  />
+                </Box>
+              </WrapItem>
+            )}
+          </Wrap>
           <StatisticsTable data={tableData} />
         </VStack>
       </Center>

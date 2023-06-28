@@ -20,17 +20,18 @@ const Dashboard: React.FC = () => {
   const [videoStats, setVideoStats] = useState(initialVideoStats);
 
   return (
-    <FilterContext.Provider value={{ filters, setFilters, videoStats, setVideoStats }}>
+    <FilterContext.Provider
+      value={{ filters, setFilters, videoStats, setVideoStats }}
+    >
       <Center>
         <HStack>
-          <Box w='1vw' />
-          <Box w='60vw'>
+          <Box w="30vw">
+            <FilterSide />
+          </Box>
+          <Box w="60vw">
             <DataSide />
           </Box>
-          <Box w='30vw'>
-            <FilterSide  />
-          </Box>
-          <Box w='1vw' />
+          <Box w="1vw" />
         </HStack>
       </Center>
     </FilterContext.Provider>
