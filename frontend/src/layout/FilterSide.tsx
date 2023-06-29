@@ -82,13 +82,11 @@ const FilterSide: React.FC = () => {
             Video Statistics
           </Heading>
           <Box
-            boxShadow={"dark-lg"}
             mt="1"
             ml="2"
             mb="1"
             w={"10vw"}
-            h={"12vh"}
-            rounded={"3xl"}
+            h={"10vh"}
           >
             <Center>
               <Stat
@@ -96,8 +94,12 @@ const FilterSide: React.FC = () => {
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-              >
+                top='3'
+                rounded={'2xl'}
+                boxShadow={'base'}
+                >
                 <StatLabel>Total Videos</StatLabel>
+                <HStack>
                 <StatNumber>{videoStats.current}</StatNumber>
                 <StatHelpText>
                   <StatArrow
@@ -105,6 +107,8 @@ const FilterSide: React.FC = () => {
                   />
                   {Math.abs(percentIncrease)}%
                 </StatHelpText>
+                </HStack>
+                
               </Stat>
             </Center>
           </Box>

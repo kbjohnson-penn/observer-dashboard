@@ -6,6 +6,15 @@ import {
   VStack,
   Wrap,
   WrapItem,
+  Button,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  HStack,
 } from "@chakra-ui/react";
 import { ChartData as ChartJsData } from "chart.js";
 import BarChart from "../components/BarChart";
@@ -13,15 +22,15 @@ import "chart.js/auto";
 import axios from "axios";
 import { FilterContext } from "../context/FilterContext";
 import { StatisticsTable } from "../components/StatisticsTable";
-
 const DataSide: React.FC = () => {
   const context = useContext(FilterContext);
   if (!context) {
     throw new Error("DataSide must be used within a FilterProvider");
   }
-  const { filters } = context;
+  const { filters, resetFilters } = context;
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState<TableData[]>([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialChartData: ChartData = {
     visitType: { labels: [], datasets: [] },
@@ -31,6 +40,21 @@ const DataSide: React.FC = () => {
   };
 
   const [chartData, setChartData] = useState<ChartData>(initialChartData);
+
+  const handleReset = () => {
+    resetFilters();
+  };
+
+  const handleExportJSON = () => {
+    const dataStr = JSON.stringify(tableData);
+    const dataUri =
+      "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+    let exportFileDefaultName = "data.json";
+    let linkElement = document.createElement("a");
+    linkElement.setAttribute("href", dataUri);
+    linkElement.setAttribute("download", exportFileDefaultName);
+    linkElement.click();
+  };
 
   interface ChartData {
     visitType: ChartJsData<"bar", number[], string>;
@@ -53,10 +77,13 @@ const DataSide: React.FC = () => {
 
     setLoading(true);
 
+    let apiUrl = "http://localhost:8000/api/videos";
+    if (visitType || reasonForVisit || sentiment || patientAgeCategory) {
+      apiUrl += `?visit_type=${visitType}&reason_for_visit=${reasonForVisit}&sentiment=${sentiment}&patient_age_category=${patientAgeCategory}`;
+    }
+
     axios
-      .get(
-        `http://localhost:8000/api/videos?visit_type=${visitType}&reason_for_visit=${reasonForVisit}&sentiment=${sentiment}&patient_age_category=${patientAgeCategory}`
-      )
+      .get(apiUrl)
       .then((response) => {
         setTableData(response.data);
 
@@ -146,7 +173,7 @@ const DataSide: React.FC = () => {
           <Wrap justify="center" spacing={4}>
             {chartData.visitType && (
               <WrapItem>
-                <Box width={'350px'} height={"250px"}>
+                <Box width={"350px"} height={"250px"}>
                   <BarChart
                     data={chartData.visitType}
                     options={chartOptions("Visit Type")}
@@ -156,7 +183,7 @@ const DataSide: React.FC = () => {
             )}
             {chartData.reasonForVisit && (
               <WrapItem>
-                <Box width={'350px'} height={"250px"}>
+                <Box width={"350px"} height={"250px"}>
                   <BarChart
                     data={chartData.reasonForVisit}
                     options={chartOptions("Reason For Visit")}
@@ -166,7 +193,7 @@ const DataSide: React.FC = () => {
             )}
             {chartData.sentiment && (
               <WrapItem>
-                <Box width={'350px'} height={"250px"}>
+                <Box width={"350px"} height={"250px"}>
                   <BarChart
                     data={chartData.sentiment}
                     options={chartOptions("Sentiment")}
@@ -176,7 +203,7 @@ const DataSide: React.FC = () => {
             )}
             {chartData.patientAgeCategory && (
               <WrapItem>
-                <Box width={'350px'} height={"250px"}>
+                <Box width={"350px"} height={"250px"}>
                   <BarChart
                     data={chartData.patientAgeCategory}
                     options={chartOptions("Patient Age Category")}
@@ -185,7 +212,22 @@ const DataSide: React.FC = () => {
               </WrapItem>
             )}
           </Wrap>
-          <StatisticsTable data={tableData} />
+          <HStack>
+            <Button rounded={'3xl'} boxShadow='dark-lg' onClick={handleReset}>Reset Filters</Button>
+            <Button rounded={'3xl'} boxShadow='dark-lg' onClick={onOpen}>Show Table</Button>
+            <Button rounded={'3xl'} boxShadow='dark-lg' onClick={handleExportJSON}>Export JSON</Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent minW='60vw'>
+                <ModalHeader>Table</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <StatisticsTable data={tableData} />
+                </ModalBody>
+              </ModalContent>
+            </Modal>
+          </HStack>
+          {/* <StatisticsTable data={tableData} /> */}
         </VStack>
       </Center>
     </Box>

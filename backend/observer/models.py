@@ -23,8 +23,14 @@ class Video(models.Model):
         ('AD', 'Adult'),
         ('S', 'Senior'),
     ]
+    DATA_SOURCE_CHOICES = [
+        ('SI', 'Simulated'),
+        ('SY', 'Synthesized'),
+        ('R', 'Real Patient/Real Doctor'),
+    ]
 
     visit_type = models.CharField(max_length=3, choices=VISIT_TYPE_CHOICES)
+    data_source = models.CharField(max_length=2, choices=DATA_SOURCE_CHOICES)
     reason_for_visit = models.CharField(max_length=2, choices=REASON_FOR_VISIT_CHOICES)
     sentiment = models.CharField(max_length=2, choices=SENTIMENT_CHOICES)
     patient_age_category = models.CharField(max_length=2, choices=AGE_CATEGORY_CHOICES)

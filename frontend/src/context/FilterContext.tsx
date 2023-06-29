@@ -1,4 +1,4 @@
-import React, { useState, createContext, ReactNode } from "react";
+import React, { useState, createContext, ReactNode, useCallback } from "react";
 
 interface FilterContextProps {
   filters: {
@@ -10,6 +10,7 @@ interface FilterContextProps {
   setFilters: React.Dispatch<
     React.SetStateAction<FilterContextProps["filters"]>
   >;
+  resetFilters: any;
   videoStats: {
     current: number;
     previous: number;
@@ -33,16 +34,22 @@ const initialVideoStats = {
   previous: 0,
 };
 
-interface FilterProviderProps {
+interface DashboardProps {
   children: ReactNode;
 }
 
-export const FilterProvider: React.FC<FilterProviderProps> = ({ children }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ children }) => {
   const [filters, setFilters] = useState(initialFilters);
   const [videoStats, setVideoStats] = useState(initialVideoStats);
 
+  const resetFilters = useCallback(() => {
+    setFilters(initialFilters);
+  }, []);
+
   return (
-    <FilterContext.Provider value={{ filters, setFilters, videoStats, setVideoStats }}>
+    <FilterContext.Provider 
+      value={{ filters, setFilters, resetFilters, videoStats, setVideoStats }}
+    >
       {children}
     </FilterContext.Provider>
   );

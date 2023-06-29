@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, Center, HStack } from "@chakra-ui/react";
 import DataSide from "../layout/DataSide";
 import FilterSide from "../layout/FilterSide";
@@ -12,6 +12,13 @@ const Dashboard: React.FC = () => {
     patientAgeCategory: "",
   });
 
+  const initialFilters = {
+    visitType: "",
+    reasonForVisit: "",
+    sentiment: "",
+    patientAgeCategory: "",
+  };
+
   const initialVideoStats = {
     current: 0,
     previous: 0,
@@ -19,9 +26,13 @@ const Dashboard: React.FC = () => {
 
   const [videoStats, setVideoStats] = useState(initialVideoStats);
 
+  const resetFilters = useCallback(() => {
+    setFilters(initialFilters);
+  }, []);
+
   return (
     <FilterContext.Provider
-      value={{ filters, setFilters, videoStats, setVideoStats }}
+      value={{ filters, setFilters, videoStats, setVideoStats, resetFilters }}
     >
       <Center>
         <HStack>
@@ -31,7 +42,6 @@ const Dashboard: React.FC = () => {
           <Box w="60vw">
             <DataSide />
           </Box>
-          <Box w="1vw" />
         </HStack>
       </Center>
     </FilterContext.Provider>
