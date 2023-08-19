@@ -4,20 +4,33 @@ import DataSide from "../layout/DataSide";
 import FilterSide from "../layout/FilterSide";
 import { FilterContext } from "../context/FilterContext";
 
-const Dashboard: React.FC = () => {
-  const [filters, setFilters] = useState({
-    visitType: "",
-    reasonForVisit: "",
-    sentiment: "",
-    patientAgeCategory: "",
-  });
-
-  const initialFilters = {
-    visitType: "",
-    reasonForVisit: "",
-    sentiment: "",
-    patientAgeCategory: "",
+interface FilterContextProps {
+  filters: {
+    visitType: string[];
+    reasonForVisit: string[];
+    sentiment: string[];
+    patientAgeCategory: string[];
   };
+  setFilters: React.Dispatch<
+    React.SetStateAction<FilterContextProps["filters"]>
+  >;
+  resetFilters: any;
+  videoStats: {
+    current: number;
+    previous: number;
+  };
+  setVideoStats: React.Dispatch<React.SetStateAction<FilterContextProps["videoStats"]>>;
+}
+
+const Dashboard: React.FC = () => {
+  const initialFilters: FilterContextProps["filters"] = {
+    visitType: [],
+    reasonForVisit: [],
+    sentiment: [],
+    patientAgeCategory: [],
+  };
+
+  const [filters, setFilters] = useState<FilterContextProps["filters"]>(initialFilters);
 
   const initialVideoStats = {
     current: 0,

@@ -11,10 +11,9 @@ import {
   StatLabel,
   StatNumber,
   VStack,
-  Wrap,
 } from "@chakra-ui/react";
-import { Filter } from "../components/Filter";
 import { FilterContext } from "../context/FilterContext";
+import { CheckboxFilter } from "../components/CheckboxFilter";
 
 const FilterSide: React.FC = () => {
   const visitTypeOptions = [
@@ -59,11 +58,11 @@ const FilterSide: React.FC = () => {
 
   const handleFilterChange = (
     filterName: keyof typeof filters,
-    value: string
+    values: string[] // changed from value: string
   ) => {
     setFilters((prevState: typeof filters) => ({
       ...prevState,
-      [filterName]: value,
+      [filterName]: values,
     }));
   };
 
@@ -81,55 +80,48 @@ const FilterSide: React.FC = () => {
           >
             Video Statistics
           </Heading>
-          <Box
-            mt="1"
-            ml="2"
-            mb="1"
-            w={"10vw"}
-            h={"10vh"}
-          >
+          <Box mt="1" ml="2" mb="1" w={"10vw"} h={"10vh"}>
             <Center>
               <Stat
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-                top='3'
-                rounded={'2xl'}
-                boxShadow={'base'}
-                >
+                top="3"
+                rounded={"2xl"}
+                boxShadow={"base"}
+              >
                 <StatLabel>Total Videos</StatLabel>
                 <HStack>
-                <StatNumber>{videoStats.current}</StatNumber>
-                <StatHelpText>
-                  <StatArrow
-                    type={percentIncrease >= 0 ? "increase" : "decrease"}
-                  />
-                  {Math.abs(percentIncrease)}%
-                </StatHelpText>
+                  <StatNumber>{videoStats.current}</StatNumber>
+                  <StatHelpText>
+                    <StatArrow
+                      type={percentIncrease >= 0 ? "increase" : "decrease"}
+                    />
+                    {Math.abs(percentIncrease)}%
+                  </StatHelpText>
                 </HStack>
-                
               </Stat>
             </Center>
           </Box>
         </HStack>
 
-        <Filter
+        <CheckboxFilter
           options={visitTypeOptions}
           heading={"Visit Type"}
           onChange={(value) => handleFilterChange("visitType", value)}
         />
-        <Filter
+        <CheckboxFilter
           options={reasonForVisitOptions}
           heading={"Reason for Visit"}
           onChange={(value) => handleFilterChange("reasonForVisit", value)}
         />
-        <Filter
+        <CheckboxFilter
           options={sentimentOptions}
           heading={"Sentiment"}
           onChange={(value) => handleFilterChange("sentiment", value)}
         />
-        <Filter
+        <CheckboxFilter
           options={patientAgeCategoryOptions}
           heading={"Patient Age Category"}
           onChange={(value) => handleFilterChange("patientAgeCategory", value)}

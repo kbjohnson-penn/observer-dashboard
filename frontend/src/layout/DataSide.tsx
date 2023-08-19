@@ -72,15 +72,18 @@ const DataSide: React.FC = () => {
   };
 
   useEffect(() => {
-    const { visitType, reasonForVisit, sentiment, patientAgeCategory } =
-      filters;
+    const { visitType, reasonForVisit, sentiment, patientAgeCategory } = filters;
 
     setLoading(true);
 
     let apiUrl = "http://localhost:8000/api/videos";
-    if (visitType || reasonForVisit || sentiment || patientAgeCategory) {
-      apiUrl += `?visit_type=${visitType}&reason_for_visit=${reasonForVisit}&sentiment=${sentiment}&patient_age_category=${patientAgeCategory}`;
-    }
+    let queryParams = [];
+    if (visitType.length) queryParams.push(`visit_type=${visitType.join(",")}`);
+    if (reasonForVisit.length) queryParams.push(`reason_for_visit=${reasonForVisit.join(",")}`);
+    if (sentiment.length) queryParams.push(`sentiment=${sentiment.join(",")}`);
+    if (patientAgeCategory.length) queryParams.push(`patient_age_category=${patientAgeCategory.join(",")}`);
+    if (queryParams.length) apiUrl += "?" + queryParams.join("&");
+
 
     axios
       .get(apiUrl)
@@ -211,6 +214,7 @@ const DataSide: React.FC = () => {
                 </Box>
               </WrapItem>
             )}
+
           </Wrap>
           <HStack>
             <Button rounded={'3xl'} boxShadow='dark-lg' onClick={handleReset}>Reset Filters</Button>
@@ -227,7 +231,6 @@ const DataSide: React.FC = () => {
               </ModalContent>
             </Modal>
           </HStack>
-          {/* <StatisticsTable data={tableData} /> */}
         </VStack>
       </Center>
     </Box>
