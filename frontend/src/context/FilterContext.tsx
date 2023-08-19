@@ -1,22 +1,5 @@
-import React, { useState, createContext, ReactNode, useCallback } from "react";
-
-interface FilterContextProps {
-  filters: {
-    visitType: string[];
-    reasonForVisit: string[];
-    sentiment: string[];
-    patientAgeCategory: string[];
-  };
-  setFilters: React.Dispatch<
-    React.SetStateAction<FilterContextProps["filters"]>
-  >;
-  resetFilters: any;
-  videoStats: {
-    current: number;
-    previous: number;
-  };
-  setVideoStats: React.Dispatch<React.SetStateAction<FilterContextProps["videoStats"]>>;
-}
+import React, { useState, createContext, useCallback } from "react";
+import { DashboardProps, FilterContextProps } from "../types/types";
 
 export const FilterContext = createContext<FilterContextProps | undefined>(
   undefined
@@ -33,28 +16,6 @@ const initialVideoStats = {
   current: 0,
   previous: 0,
 };
-
-interface DashboardProps {
-  children: ReactNode;
-}
-
-interface FilterContextProps {
-  filters: {
-    visitType: string[];
-    reasonForVisit: string[];
-    sentiment: string[];
-    patientAgeCategory: string[];
-  };
-  setFilters: React.Dispatch<
-    React.SetStateAction<FilterContextProps["filters"]>
-  >;
-  resetFilters: any;
-  videoStats: {
-    current: number;
-    previous: number;
-  };
-  setVideoStats: React.Dispatch<React.SetStateAction<FilterContextProps["videoStats"]>>;
-}
 
 export const Dashboard: React.FC<DashboardProps> = ({ children }) => {
   const [filters, setFilters] = useState<FilterContextProps["filters"]>(initialFilters);

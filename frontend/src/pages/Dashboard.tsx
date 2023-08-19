@@ -3,24 +3,7 @@ import { Box, Center, HStack } from "@chakra-ui/react";
 import DataSide from "../layout/DataSide";
 import FilterSide from "../layout/FilterSide";
 import { FilterContext } from "../context/FilterContext";
-
-interface FilterContextProps {
-  filters: {
-    visitType: string[];
-    reasonForVisit: string[];
-    sentiment: string[];
-    patientAgeCategory: string[];
-  };
-  setFilters: React.Dispatch<
-    React.SetStateAction<FilterContextProps["filters"]>
-  >;
-  resetFilters: any;
-  videoStats: {
-    current: number;
-    previous: number;
-  };
-  setVideoStats: React.Dispatch<React.SetStateAction<FilterContextProps["videoStats"]>>;
-}
+import { FilterContextProps } from "../types/types";
 
 const Dashboard: React.FC = () => {
   const initialFilters: FilterContextProps["filters"] = {

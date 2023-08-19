@@ -22,6 +22,7 @@ import "chart.js/auto";
 import axios from "axios";
 import { FilterContext } from "../context/FilterContext";
 import { StatisticsTable } from "../components/StatisticsTable";
+import { TableData } from "../types/types";
 const DataSide: React.FC = () => {
   const context = useContext(FilterContext);
   if (!context) {
@@ -62,14 +63,6 @@ const DataSide: React.FC = () => {
     sentiment: ChartJsData<"bar", number[], string>;
     patientAgeCategory: ChartJsData<"bar", number[], string>;
   }
-
-  type TableData = {
-    id: number;
-    patient_age_category: string;
-    reason_for_visit: string;
-    sentiment: string;
-    visit_type: string;
-  };
 
   useEffect(() => {
     const { visitType, reasonForVisit, sentiment, patientAgeCategory } = filters;
