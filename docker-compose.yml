@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  db:
+    image: mysql
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "3306:3306"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    entrypoint: ["/app/entrypoint.sh"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  db_data:
