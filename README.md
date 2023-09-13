@@ -1,51 +1,63 @@
-****
+# Observer Dashboard
 
-# Setting Up the Development Environment
+Observer Dashboard is a web application built with Django for the backend, React for the frontend, and orchestrated using Docker.
 
-## Backend Setup
+## Prerequisites
 
-### Setup a Virtual Environment:
+- Docker
+- Docker Compose
 
-cd backend/
+## Project Structure
 
-python3 -m venv venv
+```bash
+observer-dashboard/
+│
+├── backend/                # Django project directory
+├── frontend/               # React project directory
+├── nginx/                  # Nginx configuration directory
+├── docker-compose.yml      # Docker Compose configuration file
+├── .env.example            # Environment variables for Docker services
+└── README.md
+```
 
-source venv/bin/activate
+## Setup
 
-## Install Required Packages:
+### Clone the Repository:
 
-pip install -r requirements.txt
+```bash
+git clone https://github.com/alex-budko/observer-dashboard.git
+cd observer-dashboard
+```
 
-## Setup the Database:
+### Environment Variables:
 
-python manage.py makemigrations
+Rename the provided `.env.example` to `.env` and update the variables as necessary. Ensure that you don't commit the `.env` file to version control.
 
-python manage.py migrate
+```bash
+cp .env.example .env
+```
 
-## Run the Django Development Server:
+Edit the `.env` file with your preferred text editor. Update the `.env` file in the **backend/** directory too.
 
-python manage.py runserver
+__Note__: Ensure that the MYSQL_HOST in the `.env` file in the project root directory matches the service name in the `docker-compose.yml` file.
 
-### Note: 
+Build and Start the Services:
 
-The Django server will be available at http://127.0.0.1:8000/.
+```bash
+docker compose build
+docker compose up
+```
 
-****
+This will build the Docker images and start the services defined in `docker-compose.yml`.
 
-# Frontend Setup 
+## Access the Application:
 
-## Navigate to the Frontend Directory:
+- **Frontend**: http://localhost:3000
+- **Backend**: http://localhost:8000
+- **Django Admin**: http://localhost:8000/admin (Use the superuser credentials defined in `.env`)
 
-cd frontend/
+## Development
 
-## Install Required Packages:
+**Backend**: Any changes made to the Django application will be reflected immediately due to the volume binding in the `docker-compose.yml`.
 
-npm install
-
-## Run the React Development Server:
-
-npm start
-
-### Note: The React app will be live at http://localhost:3000/.
-
-****
+**Frontend**: Similarly, changes made in the React app will be reflected in real-time, due to React's _hot-reloading_ feature.

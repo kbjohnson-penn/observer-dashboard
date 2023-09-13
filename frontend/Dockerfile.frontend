@@ -1,0 +1,15 @@
+# Use the official Node 18.17 image as a base image
+FROM node:18.17
+
+#  Set the working directory
+WORKDIR /app
+
+# Copy the package file and install dependencies
+COPY package.json package-lock.json /app/
+RUN npm install
+
+# Copy the rest of the application code
+COPY . /app/
+
+# Run the application
+CMD ["npm", "run", "start"]
