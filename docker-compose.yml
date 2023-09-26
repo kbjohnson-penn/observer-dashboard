@@ -34,8 +34,6 @@ services:
       - ./frontend:/app
     ports:
       - "8002:3000"
-    environment:
-      - NODE_ENV=development
 
   nginx:
     image: nginx:latest
