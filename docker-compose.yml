@@ -9,7 +9,7 @@ services:
       - .env
     restart: always
     ports:
-      - "3306:3306"
+      - "8003:3306"
 
   backend:
     build:
@@ -19,7 +19,7 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       - db
     env_file:
@@ -33,16 +33,14 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
+      - "8002:3000"
 
   nginx:
     image: nginx:latest
     volumes:
       - ./nginx:/etc/nginx/conf.d
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       - backend
       - frontend
