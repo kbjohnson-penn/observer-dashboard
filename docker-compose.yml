@@ -19,7 +19,7 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "8001:8000"
+      - "8000:8000"
     depends_on:
       - db
     env_file:
@@ -33,17 +33,7 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - "8002:3000"
-
-  nginx:
-    image: nginx:latest
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-    ports:
-      - "8000:80"
-    depends_on:
-      - backend
-      - frontend
+      - "3000:3000"
 
 volumes:
   db_data:
