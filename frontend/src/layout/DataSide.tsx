@@ -69,7 +69,7 @@ const DataSide: React.FC = () => {
 
     setLoading(true);
 
-    let apiUrl = "http://localhost:8000/api/videos";
+    let apiUrl = "http://0.0.0.0:8000/api/videos";
     let queryParams = [];
     if (visitType.length) queryParams.push(`visit_type=${visitType.join(",")}`);
     if (reasonForVisit.length) queryParams.push(`reason_for_visit=${reasonForVisit.join(",")}`);
